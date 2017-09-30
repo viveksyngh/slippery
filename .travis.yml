@@ -1,0 +1,30 @@
+language: python
+
+sudo: false
+
+python:
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+install:
+  - pip install codecov
+  - pip install pytest-cov
+  - pip install flake8-builtins
+  - pip install flake8-commas
+  - pip install flake8-quotes
+  - pip install pytest-flake8
+
+script: py.test --cov=slippery/
+
+after_success:
+  codecov
+
+#deploy:
+#  provider: pypi
+#  user: lk-geimfari
+#  password: $SECURE_PASS
+#  on:
+#    branch: master
+#    tags: true

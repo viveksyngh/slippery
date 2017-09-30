@@ -27,10 +27,29 @@ def get_module_name(fn):
     return mod.replace(',', '')
 
 
-# TODO: This function should short big list, tuple, set, dict.
-# TODO: This function is internal for decorator @prettify
-# Examples:
-#    {x for x in range(1000)} should be: {1, 2, 3, ...}
-#    [x for x in range(1000)] should be: [1, 2, 3, ...]
-def shortened():
-    pass
+# TODO: Write unittest
+def shortened(fn):
+	number_of_elements = 3
+	if isinstance(fn, dict):
+		print_copy = dict()
+		length = len(fn.keys())
+		for key in list(fn.keys())[:number_of_elements]:
+			print_copy[key] = fn[key]
+		startwith, endwith = '{', '}'
+
+	else:
+		length = len(fn)
+		print_copy = list(fn)[:number_of_elements]
+		if isinstance(fn, list):
+			startwith, endwith = '[', ']'
+		elif isinstance(fn, tuple):
+			startwith, endwith = '(', ')'
+		elif isinstance(fn, set):
+			startwith, endwith = '{', '}'
+		elif not inspect.isfunction(fn):
+			raise TypeError("Input is not a function.")
+
+	if length > number_of_elements:
+		return startwith +  str(print_copy)[1:-1] + ", ..." + endwith
+	else:
+		return startwith + str(print_copy)[1:-1] + endwith

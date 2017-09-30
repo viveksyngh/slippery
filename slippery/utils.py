@@ -1,8 +1,5 @@
 from slippery import output as o
-import inspect
 
-
-# TODO: Refactoring.
 
 def represent_params(args, kwargs):
     kwargs = ', '.join(

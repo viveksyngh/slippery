@@ -1,4 +1,5 @@
 from slippery import output as o
+import inspect
 
 
 # TODO: Refactoring.
@@ -27,29 +28,28 @@ def get_module_name(fn):
     return mod.replace(',', '')
 
 
-# TODO: Write unittest
-def shortened(fn):
-	number_of_elements = 3
-	if isinstance(fn, dict):
-		print_copy = dict()
-		length = len(fn.keys())
-		for key in list(fn.keys())[:number_of_elements]:
-			print_copy[key] = fn[key]
-		startwith, endwith = '{', '}'
+def shortened(seq, max_len=10):
+    copy, sw, ew = None, '', ''
 
-	else:
-		length = len(fn)
-		print_copy = list(fn)[:number_of_elements]
-		if isinstance(fn, list):
-			startwith, endwith = '[', ']'
-		elif isinstance(fn, tuple):
-			startwith, endwith = '(', ')'
-		elif isinstance(fn, set):
-			startwith, endwith = '{', '}'
-		elif not inspect.isfunction(fn):
-			raise TypeError("Input is not a function.")
+    if len(seq) > max_len and seq:
+        if isinstance(seq, dict):
+            copy = {}
+            for key in list(seq.keys())[:max_len]:
+                copy[key] = seq[key]
+            sw, ew = '{', '}'
+        elif isinstance(seq, list):
+            copy = seq[:max_len]
+            sw, ew = '[', ']'
+        elif isinstance(seq, tuple):
+            copy = seq[:max_len]
+            sw, ew = '(', ')'
 
-	if length > number_of_elements:
-		return startwith +  str(print_copy)[1:-1] + ", ..." + endwith
-	else:
-		return startwith + str(print_copy)[1:-1] + endwith
+        sstr = str(copy)[1:-1]
+
+        return '{sw}{sstr}, ...{ew}'.format(
+            sw=sw,
+            sstr=sstr,
+            ew=ew,
+        )
+    else:
+        return str(seq)

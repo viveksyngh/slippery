@@ -75,7 +75,7 @@ Also you can disassemble function using decorator `@disassemble`:
 
 ```python
 @slippery.disassemble
-def generator():
+def generator(maximum=1000):
     result = [
         k for k in [
             i for i in range(20)
@@ -83,7 +83,7 @@ def generator():
     ]
     result.append([x for x in 'SMAP'])
 
-    return result
+    return result	
 ```
 Result:
 ![](media/dis_screen.png)

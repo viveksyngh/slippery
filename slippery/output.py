@@ -1,50 +1,74 @@
-BOLD = '\033[1m'
-RESET = "\033[0m"
-GREEN = '\033[92m'
-ORANGE = '\033[33m'
-BLUE = '\033[34m'
-CYAN = '\033[96m'
+"""Handling of output formatting."""
 
+from pprint import pformat
+from inspect import signature
 
-# TODO: Change color schema for messages and simplify format.
-# TODO: Should be: clr(message, 'g') where g is green
-def bold(st):
-    return '{}{}{}'.format(BOLD, st, RESET)
+from .colors import *
+from .utils import represent_params, get_line, get_module_name
 
-
-def green(st):
-    return '{}{}{}'.format(GREEN, st, RESET)
-
-
-def orange(st):
-    return '{}{}{}'.format(ORANGE, st, RESET)
-
-
-def blue(st):
-    return '{}{}{}'.format(BLUE, st, RESET)
-
-
-def cyan(st):
-    return '{}{}{}'.format(CYAN, st, RESET)
-
-
-LINES = '------' * 14
-
+LINES = '-' * 80
 BLUE_LINES = blue(LINES)
 ORANGE_LINES = orange(LINES)
 CYAN_LINES = cyan(LINES)
 GREEN_LINES = green(LINES)
 
-# TODO: Simplify it. It's looks unreadable.
-OUTPUT_TEMPLATE = BLUE_LINES + '''
-\033[1mTotal time\033[0m: \033[92m{time:0.8f} Sec\033[0m.
-\033[1mCalled function\033[0m: \033[92m{func}({args}, {kwargs}\033[92m)\033[0m\n
-\033[1mResult\033[0m: \033[92m{result}\033[0m.
-''' + BLUE_LINES
 
-# TODO: It's too.
-DIS_TEMPLATE = """
-\033[92mFunction\033[0m: \033[1m{func}(\033[0m{arguments}\033[1m)\033[0m at line {line}.
-\033[92mPositional arguments    \033[0m: {args}
-\033[92mKeyword arguments\033[0m: {kwargs}
-"""
+FUNC_HEADER_TEMPLATE = BLUE_LINES + """
+{green}File{reset}: {file} [line {line}]: 
+{green}Function{reset}: {bold}{func}({reset}{signature}{bold}){reset}
+{green}Positional arguments{reset}: {args}
+{green}Keyword arguments{reset}: {kwargs}
+""" + LINES
+
+
+def format_function_header(func, args, kwargs):
+    args, kwargs = represent_params(args, kwargs)
+
+    info = {
+        'file': get_module_name(func),
+        'func': func.__name__,
+        'line': get_line(func),
+        'signature': str(signature(func))[1:-1],  # Strip the parentheses.
+        'args': args or '[]',
+        'kwargs': kwargs or '[]',
+    }
+
+    info.update(**COLORS)
+
+    return FUNC_HEADER_TEMPLATE.format(**info)
+
+
+RETURN_VALUE_TEMPLATE = "{bold}Return Value{reset}: {green}{result}{reset}"
+
+
+def format_return_value(result, indent=0, width=80, compact=True):
+    result = pformat(result, indent=indent, width=width, compact=compact)
+
+    if len(result.split('\n')) > 1:
+        result = '\n{}'.format(result)
+
+    info = {'result': result}
+    info.update(**COLORS)
+
+    return RETURN_VALUE_TEMPLATE.format(**info)
+
+
+EXEC_TIME_TEMPLATE = """
+{header}
+{bold}Total execution time{reset}: {green}{time:0.8f} Seconds{reset}
+{underline}
+{result}
+""" + BLUE_LINES
+
+
+def format_exec_time(time, func, args, kwargs, result):
+    info = {
+        'header': format_function_header(func, args, kwargs),
+        'time': time,
+        'underline': LINES,
+        'result': format_return_value(result),
+    }
+
+    info.update(**COLORS)
+
+    return EXEC_TIME_TEMPLATE.format(**info)

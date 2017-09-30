@@ -1,9 +1,9 @@
 import slippery
 
 
-@slippery.execution_time()
+@slippery.disassemble
 def generator(no=True, maximum=100, registry=None):
-    if True:
+    if no:
         pass
 
     if not registry:

@@ -1,18 +1,17 @@
-from slippery import output as o
-import inspect
-
+from .colors import *
 
 # TODO: Refactoring.
 
+
 def represent_params(args, kwargs):
-    kwargs = ', '.join(
-        ['{k}{t}{v}'.format(
-            k=o.orange(k),
-            v=o.orange(v),
-            t=o.blue('='),
-        ) for k, v in kwargs.items()]
+    kwargs = ', '.join([
+        '{k}{eq}{v}'.format(
+            k=orange(k),
+            eq=blue('='),
+            v=orange(v))
+        for k, v in kwargs.items()]
     )
-    args = ', '.join([o.orange(str(arg)) for arg in args])
+    args = ', '.join([orange(str(arg)) for arg in args])
 
     return args, kwargs
 

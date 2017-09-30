@@ -45,6 +45,6 @@ OUTPUT_TEMPLATE = BLUE_LINES + '''
 # TODO: It's too.
 DIS_TEMPLATE = """
 \033[92mFunction\033[0m: \033[1m{func}(\033[0m{arguments}\033[1m)\033[0m at line {line}.
-\033[92mPositional arguments\033[0m: {args}
+\033[92mPositional arguments    \033[0m: {args}
 \033[92mKeyword arguments\033[0m: {kwargs}
 """

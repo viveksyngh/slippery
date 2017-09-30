@@ -6,7 +6,7 @@
 
 
 **Slippery** - collections of useful decorators for different phases of development software. 
-Your code seems works slowly and you have not f*cking idea why it's happen and how to check it? Function returns crazy structured data and you can't find what you need? So, Slippery Stair help with all this problems and another ones. Just decorate function which you need and take a look at result.
+Your code seems works slowly and you have not any idea why it's happen and how to check it? Function returns crazily structured data and you can't find what you need? So, Slippery Stair help with all this problems and another ones. Just decorate function which you need and take a look at result.
 
 ## Installation
 

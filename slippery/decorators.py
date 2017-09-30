@@ -70,6 +70,7 @@ def disassemble(fn):
 
     return inner
 
+
 # TODO: Add function name, line and args, kwargs
 def efficiency(func):
     @functools.wraps(func)
@@ -119,4 +120,3 @@ def prettify(indent=0, width=80, compact=True):
         return inner
 
     return decorate
-

@@ -53,19 +53,16 @@ def disassemble(fn):
         arguments = args + ', ' + kwargs if \
             len(args) >= 1 else kwargs
 
-        print('{b}'.format(b=o.BLUE_LINES))
-
-        print(o.DIS_TEMPLATE.format(**{
-            'func': fn.__name__,
-            'line': o.bold(line),
-            'args': args,
-            'kwargs': kwargs,
-            'arguments': arguments
-        }))
-
-        print('{b}'.format(b=o.BLUE_LINES))
-        dis.dis(fn)
-        print('{b}'.format(b=o.BLUE_LINES), end='\n\n')
+        with o.LinesPrinter() as lp:
+            print(o.DIS_TEMPLATE.format(**{
+                'func': fn.__name__,
+                'line': o.bold(line),
+                'args': args,
+                'kwargs': kwargs,
+                'arguments': arguments
+            }))
+            lp.line()
+            dis.dis(fn)
         return result
 
     return inner
@@ -82,9 +79,8 @@ def efficiency(func):
         finally:
             profiler.disable()
             stats = CustomStats(profiler, stream=sys.stdout)
-            print('{b}'.format(b=o.BLUE_LINES), end='\n\n')
-            stats.print_stats()
-            print('{b}'.format(b=o.BLUE_LINES), end='\n\n')
+            with o.LinesPrinter(end='\n\n') as lp:
+                stats.print_stats()
 
         return result
 
@@ -108,12 +104,11 @@ def prettify(indent=0, width=80, compact=True):
 
             # TODO: Replace template with much useful.
             # TODO: Refactoring. It's looks so f**king bad.
-            print(o.BLUE_LINES)
-            print('Function {} from file {}, line {} returns:\n{}'.format(
-                o.cyan(func.__name__ + '()'),
-                o.cyan(get_module_name(func)),
-                line, o.green(res)))
-            print(o.BLUE_LINES)
+            with o.LinesPrinter() as lp:
+                print('Function {} from file {}, line {} returns:\n{}'.format(
+                    o.cyan(func.__name__ + '()'),
+                    o.cyan(get_module_name(func)),
+                    line, o.green(res)))
 
             return result
 

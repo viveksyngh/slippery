@@ -1,6 +1,13 @@
+import re
+
 from .colors import *
 
-# TODO: Refactoring.
+
+def escape_ansi(string):
+    regex = r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]'
+    return re.compile(regex).sub(
+        '', string,
+    )
 
 
 def represent_params(args, kwargs):

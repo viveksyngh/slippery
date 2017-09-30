@@ -1,1 +1,7 @@
 __version__ = '0.0.1'
+__title__ = 'slippery'
+__description__ = 'SlipperyЖ collections of useful decorators.'
+__url__ = 'https://github.com/lk-geimfari/slippery'
+__author__ = 'Likid Geimfari (Isaak Uchakaev)'
+__author_email__ = 'likid.geimfari@gmail.com'
+__license__ = 'MIT License'

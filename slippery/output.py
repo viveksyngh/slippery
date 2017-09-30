@@ -1,3 +1,5 @@
+from string import Template
+
 BOLD = '\033[1m'
 RESET = "\033[0m"
 GREEN = '\033[92m'
@@ -35,16 +37,36 @@ ORANGE_LINES = orange(LINES)
 CYAN_LINES = cyan(LINES)
 GREEN_LINES = green(LINES)
 
-# TODO: Simplify it. It's looks unreadable.
-OUTPUT_TEMPLATE = BLUE_LINES + '''
-\033[1mTotal time\033[0m: \033[92m{time:0.8f} Sec\033[0m.
-\033[1mCalled function\033[0m: \033[92m{func}({args}, {kwargs}\033[92m)\033[0m\n
-\033[1mResult\033[0m: \033[92m{result}\033[0m.
-''' + BLUE_LINES
+OUTPUT_TEMPLATE = Template(
+    '''
+    ${BLUE_LINE}
+    ${BOLD}Total time${RESET}: ${GREEN}{time:0.8f} Sec${RESET}.
+    ${BOLD}Called function${RESET}: ${GREEN}{func}({args}, {kwargs}${GREEN})${RESET}\n
+    ${BOLD}Result${RESET}: ${GREEN}{result}${RESET}.
+    ${BLUE_LINE}
+    '''
+).safe_substitute(
+    BLUE_LINE=BLUE_LINES,
+    BOLD=BOLD,
+    RESET=RESET,
+    GREEN=GREEN,
+    ORANGE=ORANGE,
+    BLUE=BLUE,
+    CYAN=CYAN
+)
 
-# TODO: It's too.
-DIS_TEMPLATE = """
-\033[92mFunction\033[0m: \033[1m{func}(\033[0m{arguments}\033[1m)\033[0m at line {line}.
-\033[92mPositional arguments    \033[0m: {args}
-\033[92mKeyword arguments\033[0m: {kwargs}
-"""
+DIS_TEMPLATE = Template(
+    '''
+    ${GREEN}Function${RESET}: ${BOLD}{func}(${RESET}{arguments}${BOLD})${RESET} at line {line}.
+    ${GREEN}Positional arguments    ${RESET}: {args}
+    ${GREEN}Keyword arguments${RESET}: {kwargs}
+    '''
+).safe_substitute(
+    BLUE_LINE=BLUE_LINES,
+    BOLD=BOLD,
+    RESET=RESET,
+    GREEN=GREEN,
+    ORANGE=ORANGE,
+    BLUE=BLUE,
+    CYAN=CYAN
+)

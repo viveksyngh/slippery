@@ -82,7 +82,14 @@ def efficiency(func):
         finally:
             profiler.disable()
             stats = CustomStats(profiler, stream=sys.stdout)
+            args, kwargs = represent_params(args, kwargs)
             print('{b}'.format(b=o.BLUE_LINES), end='\n\n')
+            print(o.EFF_TEMPLATE.format(**{
+                'func': func.__name__,
+                'line': get_line(func),
+                'args': args,
+                'kwargs': kwargs
+            }))
             stats.print_stats()
             print('{b}'.format(b=o.BLUE_LINES), end='\n\n')
 

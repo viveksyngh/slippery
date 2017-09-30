@@ -46,8 +46,8 @@ def shortened(fn):
 			startwith, endwith = '(', ')'
 		elif isinstance(fn, set):
 			startwith, endwith = '{', '}'
-		else:
-			return # TODO: Throw TypeError
+		elif not inspect.isfunction(fn):
+			raise TypeError("Input is not a function.")
 
 	if length > number_of_elements:
 		return startwith +  str(print_copy)[1:-1] + ", ..." + endwith

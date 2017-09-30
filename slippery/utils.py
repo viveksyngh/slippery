@@ -1,4 +1,13 @@
+import re
+
 from slippery import output as o
+
+
+def escape_ansi(string):
+    regex = r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]'
+    return re.compile(regex).sub(
+        '', string,
+    )
 
 
 def represent_params(args, kwargs):

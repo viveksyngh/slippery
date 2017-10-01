@@ -6,7 +6,7 @@
 
 
 **Slippery** - collections of useful decorators for different phases of development software. 
-Your code seems works slowly and you have not any idea why it's happen and how to check it? Function returns crazily structured data and you can't find what you need? So, Slippery Stair help with all this problems and another ones. Just decorate function which you need and take a look at result.
+Your code seems to work slowly and you don't have any idea on why it's happening and how to check it? A function returns crazily structured data and you can't find what you need? So, Slippery Stair help with all this problems and another ones. Just decorate function which you need and take a look at result.
 
 ## Installation
 
@@ -27,7 +27,7 @@ Actually you can use it without paying schmeckles, but... come on! 25 schmeckles
 
 ## Now, seriously
 
-Sometime we need to check out execution time of some function. For example (our function is useless, because it's only for demonstration of idea):
+Sometime we need to check out execution time of some function. For example (our function is useless, because it's only for demonstration of an idea):
 
 ```python
 import slippery

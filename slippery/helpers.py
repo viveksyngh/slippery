@@ -5,9 +5,6 @@ from pstats import Stats, func_get_function_name
 import slippery.output as o
 
 
-# TODO: Awful! Refactor it all
-
-
 def f8(x):
     return "\033[34m%8.3f\033[0m" % x
 

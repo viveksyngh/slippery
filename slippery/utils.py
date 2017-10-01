@@ -1,6 +1,6 @@
 import re
 
-from .colors import *
+from .colors import orange, blue
 
 
 def escape_ansi(string):

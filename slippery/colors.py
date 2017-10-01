@@ -6,7 +6,6 @@ ORANGE = '\033[33m'
 BLUE = '\033[34m'
 CYAN = '\033[96m'
 
-
 COLORS = {
     'bold': BOLD,
     'reset': RESET,
@@ -21,8 +20,6 @@ def color_line(msg, clr):
     return '{}{}{}'.format(COLORS[clr], msg, RESET)
 
 
-# TODO: Change color schema for messages and simplify format.
-# TODO: Should be: clr(message, 'g') where g is green
 def bold(st):
     return '{}{}{}'.format(BOLD, st, RESET)
 

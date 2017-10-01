@@ -8,7 +8,6 @@ import functools
 import slippery.output as o
 from .helpers import CustomStats
 
-
 __all__ = [
     'efficiency',
     'execution_time',
@@ -19,6 +18,7 @@ __all__ = [
 
 def execution_time(func):
     """Measure execution time for the decorated function."""
+
     @functools.wraps(func)
     def inner(*args, **kwargs):
         start_time = time.time()
@@ -38,6 +38,7 @@ def execution_time(func):
 
 def disassemble(func):
     """Print the decorated's function disassembly."""
+
     @functools.wraps(func)
     def inner(*args, **kwargs):
         result = func(*args, **kwargs)
@@ -53,6 +54,7 @@ def disassemble(func):
 
 def efficiency(func):
     """Run the decorated function within a cProfile measurement."""
+
     @functools.wraps(func)
     def inner(*args, **kwargs):
         profiler = cProfile.Profile()
@@ -78,6 +80,7 @@ def prettify(indent=0, width=80, compact=True):
     The values of `indent`, `width` and `compact` are taking effect only on the
     function's return value.
     """
+
     def decorate(func):
         @functools.wraps(func)
         def inner(*args, **kwargs):

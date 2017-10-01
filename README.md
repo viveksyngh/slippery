@@ -4,7 +4,6 @@
     </p>
 </a>
 
-
 **Slippery** - collections of useful decorators for different phases of 
 software development. 
 
@@ -36,7 +35,7 @@ Only 25 schmeckles for Slippery Stair? That's a bargain!
 
 ## Now, seriously
 
-Sometime we need to check out execution time of some function. 
+Sometime we need to check out the execution time of some function. 
 Here's a useless function for example:
 
 ```python

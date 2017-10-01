@@ -25,7 +25,7 @@ def execution_time(func):
         result = func(*args, **kwargs)
         run_time = time.time() - start_time
 
-        printo(t.format_exec_time(run_time,
+        print(t.format_exec_time(run_time,
                                  func,
                                  args,
                                  kwargs,

@@ -4,8 +4,7 @@
     </p>
 </a>
 
-**Slippery** - collections of useful decorators for different phases of 
-software development. 
+**Slippery** - collections of useful decorators for performance checking, profiling, disassembling, pretty output of data structures and more.
 
 Your code seems to work slowly and you haven't got any idea why it happens 
 and how to solve it? 

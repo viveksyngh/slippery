@@ -1,13 +1,13 @@
-import cProfile as c
+"""Function decorators implementation."""
 import dis
-import functools
 import sys
 import time
-from pprint import pformat
+import cProfile
+import functools
 
 import slippery.output as o
-from slippery.helpers import CustomStats
-from slippery.utils import represent_params, get_line, get_module_name
+from .helpers import CustomStats
+
 
 __all__ = [
     'efficiency',
@@ -17,78 +17,55 @@ __all__ = [
 ]
 
 
-# TODO: Refactor in all. This is awful!
-
 def execution_time(func):
+    """Measure execution time for the decorated function."""
     @functools.wraps(func)
     def inner(*args, **kwargs):
         start_time = time.time()
         result = func(*args, **kwargs)
+        run_time = time.time() - start_time
 
-        template = o.OUTPUT_TEMPLATE
-        args, kwargs = represent_params(args, kwargs)
+        print(o.format_exec_time(run_time,
+                                 func,
+                                 args,
+                                 kwargs,
+                                 result))
 
-        print(template.format(**{
-            'time': time.time() - start_time,
-            'func': func.__name__,
-            'args': args,
-            'kwargs': kwargs,
-            'result': pformat(result, indent=0, width=80, compact=True),
-        }))
         return result
 
     return inner
 
 
-def disassemble(fn):
-    @functools.wraps(fn)
-    def inner(*args, **kwargs):
-        result = fn(*args, **kwargs)
-
-        args, kwargs = represent_params(args, kwargs)
-
-        # Get code line
-        line = get_line(fn)
-
-        arguments = args + ', ' + kwargs if \
-            len(args) >= 1 else kwargs
-
-        with o.LinesPrinter() as lp:
-            print(o.DIS_TEMPLATE.format(**{
-                'func': fn.__name__,
-                'line': o.bold(line),
-                'args': args,
-                'kwargs': kwargs,
-                'arguments': arguments
-            }))
-            lp.line()
-            dis.dis(fn)
-        return result
-
-    return inner
-
-
-# TODO: Add function name, line and args, kwargs
-def efficiency(func):
+def disassemble(func):
+    """Print the decorated's function disassembly."""
     @functools.wraps(func)
     def inner(*args, **kwargs):
-        profiler = c.Profile()
+        result = func(*args, **kwargs)
+
+        print(o.format_function_header(func, args, kwargs))
+        dis.dis(func)
+        print(o.BLUE_LINES)
+
+        return result
+
+    return inner
+
+
+def efficiency(func):
+    """Run the decorated function within a cProfile measurement."""
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        profiler = cProfile.Profile()
         profiler.enable()
         try:
             result = func(*args, **kwargs)
         finally:
             profiler.disable()
-            stats = CustomStats(profiler, stream=sys.stdout)
 
-            args, kwargs = represent_params(args, kwargs)
-            with o.LinesPrinter(end='\n\n') as lp:
-                print(o.EFF_TEMPLATE.format(**{
-                    'func': func.__name__,
-                    'line': get_line(func),
-                    'args': args,
-                    'kwargs': kwargs
-                }))
-                stats.print_stats()
+            print(o.format_function_header(func, args, kwargs))
+            stats = CustomStats(profiler, stream=sys.stdout)
+            stats.print_stats()
+            print(o.BLUE_LINES)
 
         return result
 
@@ -96,27 +73,19 @@ def efficiency(func):
 
 
 def prettify(indent=0, width=80, compact=True):
+    """Return a decorator that prints the function call nicely.
+
+    The values of `indent`, `width` and `compact` are taking effect only on the
+    function's return value.
+    """
     def decorate(func):
         @functools.wraps(func)
         def inner(*args, **kwargs):
             result = func(*args, **kwargs)
 
-            res = pformat(
-                result,
-                indent=indent,
-                width=width,
-                compact=compact,
-            )
-
-            line = get_line(func)
-
-            # TODO: Replace template with much useful.
-            # TODO: Refactoring. It's looks so f**king bad.
-            with o.LinesPrinter() as lp:
-                print('Function {} from file {}, line {} returns:\n{}'.format(
-                    o.cyan(func.__name__ + '()'),
-                    o.cyan(get_module_name(func)),
-                    line, o.green(res)))
+            print(o.format_function_header(func, args, kwargs))
+            print(o.format_return_value(result, indent, width, compact))
+            print(o.BLUE_LINES)
 
             return result
 

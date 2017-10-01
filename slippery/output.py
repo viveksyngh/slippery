@@ -107,3 +107,26 @@ DIS_TEMPLATE = Template(
     BLUE=BLUE,
     CYAN=CYAN
 )
+
+EFF_TEMPLATE = Template(
+    '''
+   ${GREEN}Function${RESET}: ${BOLD}{func}${RESET} at line {line}.
+   ${GREEN}Positional arguments    ${RESET}: {args}
+   ${GREEN}Keyword arguments${RESET}: {kwargs}
+    '''
+).safe_substitute(
+    BLUE_LINE=BLUE_LINES,
+    BOLD=BOLD,
+    RESET=RESET,
+    GREEN=GREEN,
+    ORANGE=ORANGE,
+    BLUE=BLUE,
+    CYAN=CYAN
+)
+
+# EFF_TEMPLATE = """
+# \033[92mFunction\033[0m: \033[1m{func}\033[0m at line {line}.
+# \033[92mPositional arguments    \033[0m: {args}
+# \033[92mKeyword arguments\033[0m: {kwargs}
+# """
+

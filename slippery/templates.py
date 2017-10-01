@@ -2,10 +2,8 @@
 from string import Template
 from pprint import pformat
 from inspect import signature
-
 from .colors import *
 from .utils import represent_params, get_line, get_module_name
-
 
 LINES = '-' * 80
 BLUE_LINES = blue(LINES)
@@ -46,7 +44,6 @@ ${green}Function${reset}: ${bold}{func}(${reset}{signature}${bold})${reset}
 ${green}Positional arguments${reset}: {args}
 ${green}Keyword arguments${reset}: {kwargs}
 """ + LINES).safe_substitute(**COLORS)
-
 
 def format_function_header(func, args, kwargs):
     args, kwargs = represent_params(args, kwargs)

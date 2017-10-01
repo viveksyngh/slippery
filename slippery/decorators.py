@@ -82,9 +82,11 @@ def prettify(indent=0, width=80, compact=True):
         @functools.wraps(func)
         def inner(*args, **kwargs):
             result = func(*args, **kwargs)
+
             print(o.format_function_header(func, args, kwargs))
             print(o.format_return_value(result, indent, width, compact))
             print(o.BLUE_LINES)
+
             return result
 
         return inner

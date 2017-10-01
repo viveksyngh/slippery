@@ -17,7 +17,7 @@ COLORS = {
 }
 
 
-def color(msg, clr):
+def color_line(msg, clr):
     return '{}{}{}'.format(COLORS[clr], msg, RESET)
 
 

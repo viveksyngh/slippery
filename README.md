@@ -27,7 +27,7 @@ Actually you can use it without paying schmeckles, but... come on! 25 schmeckles
 
 ## Now, seriously
 
-Sometime we need to check out execution time of some function. For example (our function is useless, because it's only for demonstration of an idea):
+Sometimes we need to check out execution time of some function. For example (our function is useless, because it's only for demonstration of an idea):
 
 ```python
 import slippery

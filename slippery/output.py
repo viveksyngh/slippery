@@ -8,6 +8,43 @@ BLUE = '\033[34m'
 CYAN = '\033[96m'
 
 
+class LinesPrinter:
+    """
+        Prints colored lines before and after what you want.
+        
+        Usage:
+        >>> with LinesPrinter() as lp:
+        >>>     print("Lorem ipsum...")
+        
+        Will print a line before and after "Lorem ipsum...".
+        Use the "line()" method to print another line inside.
+    """
+    
+    def __init__(self, color='b', end='\n'):
+        # TODO : Modify with "clr(message, 'g')" (WIP).
+        self.color = {
+            'B': BOLD,
+            'b': BLUE,
+            'g': GREEN,
+            'o': ORANGE,
+            'b': BLUE,
+            'c': CYAN,
+        }.get(color)
+        self.reset = RESET
+        self.end = end
+    
+    def __enter__(self):
+        self.line(self.end)
+        return self
+    
+    def __exit__(self, type, value, traceback):
+        self.line(self.end)
+    
+    def line(self, end='\n'):
+        # TODO : Modify with "clr(message, 'g')" (WIP).
+        print('{}{}{}'.format(self.color, LINES, self.reset), end=end)
+
+
 # TODO: Change color schema for messages and simplify format.
 # TODO: Should be: clr(message, 'g') where g is green
 def bold(st):

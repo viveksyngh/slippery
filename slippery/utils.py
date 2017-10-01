@@ -1,4 +1,5 @@
 import re
+import inspect
 
 from .colors import orange, blue
 
@@ -24,14 +25,11 @@ def represent_params(args, kwargs):
 
 
 def get_line(fn):
-    string = str(fn.__code__).split(' ')[-1::][0]
-    string = string.replace('>', '')
-    return int(string) + 1
+    return inspect.getsourcelines(fn)[1] + 1
 
 
 def get_module_name(fn):
-    mod = str(fn.__code__).split(' ')[-3::][0]
-    return mod.replace(',', '')
+    return inspect.getmodule(fn).__file__[:-1]
 
 
 def shortened(seq, max_len=10):

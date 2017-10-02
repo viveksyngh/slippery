@@ -4,9 +4,15 @@
     </p>
 </a>
 
+**Slippery** - collections of useful decorators for performance checking, profiling, disassembling, pretty output of data structures and more.
 
-**Slippery** - collections of useful decorators for different phases of development software. 
-Your code seems works slowly and you have not any idea why it's happen and how to check it? Function returns crazily structured data and you can't find what you need? So, Slippery Stair help with all this problems and another ones. Just decorate function which you need and take a look at result.
+Your code seems to work slowly and you haven't got any idea why it happens 
+and how to solve it? 
+
+A function returns crazily structured data and you can't find what you need? 
+
+So, Slippery Stair help with all these problems and some more. 
+Just decorate functions you need to take a second look at and see what happens!
 
 ## Installation
 
@@ -16,25 +22,27 @@ Your code seems works slowly and you have not any idea why it's happen and how t
 
 ## Usage
 
-For using this library you need to pay 25 schmeckles.
+To use this library you need to pay 25 schmeckles.
 
 ```bash
 export SCHMECKLES=25
 ```
 
-Actually you can use it without paying schmeckles, but... come on! 25 schmeckles for Slippery Stair? Easily!
+<sub>You can actually use it without paying any schmeckles, but... come on! 
+Only 25 schmeckles for Slippery Stair? That's a bargain!
 
 
 ## Now, seriously
 
-Sometime we need to check out execution time of some function. For example (our function is useless, because it's only for demonstration of idea):
+Sometime we need to check out the execution time of some function. 
+Here's a useless function for example:
 
 ```python
 import slippery
 
 @slippery.execution_time
 def generator(no=True, maximum=100, registry=None):
-    if True:
+    if no:
         do_something()
 
     if not registry:
@@ -56,8 +64,7 @@ Result:
 ![](media/exe_time_dec_screen.png)
 
 
-
-When you need more information than returns `@execution_time` decorator, then you should use decorator `@efficiency`:
+When you need more information than the one returned from the `@execution_time` decorator you should use the `@efficiency` decorator:
 
 ```python
 @slippery.efficiency
@@ -71,11 +78,11 @@ Result:
 ![](media/efficiency_screen.png)
 
 
-Also you can disassemble function using decorator `@disassemble`:
+You can also disassemble the function using the `@disassemble` decorator:
 
 ```python
 @slippery.disassemble
-def generator():
+def generator(maximum=1000):
     result = [
         k for k in [
             i for i in range(20)
@@ -83,14 +90,16 @@ def generator():
     ]
     result.append([x for x in 'SMAP'])
 
-    return result
+    return result	
 ```
 Result:
+
 ![](media/dis_screen.png)
+
 
 ## Disclaimer
 Slippery is developed only for developers and only for debugging and testing phases. This library should not used in production, if you don't want unacceptable behaviour of your application.
 
 ## Thanks
 
-This library is originally inspired by character (*Slippery Stair*) from `Rick and Morty`. Special thanks for `Mark Lutz` and `Luciano Romalho` for great books about Python.
+This library is originally inspired by the character *Slippery Stair* from `Rick and Morty`. Special thanks for `Mark Lutz` and `Luciano Romalho` for great books about Python.

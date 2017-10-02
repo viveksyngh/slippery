@@ -1,10 +1,4 @@
-"""Ansi color codes."""
-RESET = '\033[0m'
-BOLD = '\033[1m'
-GREEN = '\033[92m'
-ORANGE = '\033[33m'
-BLUE = '\033[34m'
-CYAN = '\033[96m'
+from .constants import *
 
 COLORS = {
     'bold': BOLD,
@@ -14,7 +8,6 @@ COLORS = {
     'blue': BLUE,
     'cyan': CYAN,
 }
-
 
 def color_line(msg, clr):
     return '{}{}{}'.format(COLORS[clr], msg, RESET)

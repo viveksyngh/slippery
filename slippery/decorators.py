@@ -5,7 +5,7 @@ import time
 import cProfile
 import functools
 
-import slippery.output as o
+import slippery.templates as t
 from .helpers import CustomStats
 
 __all__ = [
@@ -25,7 +25,7 @@ def execution_time(func):
         result = func(*args, **kwargs)
         run_time = time.time() - start_time
 
-        print(o.format_exec_time(run_time,
+        print(t.format_exec_time(run_time,
                                  func,
                                  args,
                                  kwargs,
@@ -43,9 +43,9 @@ def disassemble(func):
     def inner(*args, **kwargs):
         result = func(*args, **kwargs)
 
-        print(o.format_function_header(func, args, kwargs))
+        print(t.format_function_header(func, args, kwargs))
         dis.dis(func)
-        print(o.BLUE_LINES)
+        print(t.BLUE_LINES)
 
         return result
 
@@ -64,10 +64,10 @@ def efficiency(func):
         finally:
             profiler.disable()
 
-            print(o.format_function_header(func, args, kwargs))
+            print(t.format_function_header(func, args, kwargs))
             stats = CustomStats(profiler, stream=sys.stdout)
             stats.print_stats()
-            print(o.BLUE_LINES)
+            print(t.BLUE_LINES)
 
         return result
 
@@ -86,9 +86,9 @@ def prettify(indent=0, width=80, compact=True):
         def inner(*args, **kwargs):
             result = func(*args, **kwargs)
 
-            print(o.format_function_header(func, args, kwargs))
-            print(o.format_return_value(result, indent, width, compact))
-            print(o.BLUE_LINES)
+            print(t.format_function_header(func, args, kwargs))
+            print(t.format_return_value(result, indent, width, compact))
+            print(t.BLUE_LINES)
 
             return result
 
